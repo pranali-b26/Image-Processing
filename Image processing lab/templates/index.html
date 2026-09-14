@@ -1,0 +1,196 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Image Processing Virtual Laboratory</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=postlab-10-11-fixed-1">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn">☰</button>
+    <div>
+      <div class="brand">▣ Image Processing Virtual Laboratory</div>
+      <div class="subtitle">Python + OpenCV Practical Experiments</div>
+    </div>
+    <div class="top-actions">
+      <button class="ghost" id="themeBtn">◐ Theme</button>
+      <a href="#about">About</a>
+    </div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="side-title">Practicals</div>
+    <button class="nav-item active" data-pid="2">02 · Image Formats & Operations</button>
+    <button class="nav-item" data-pid="3">03 · Geometric Transformations</button>
+    <button class="nav-item" data-pid="4">04 · Image Enhancement</button>
+    <button class="nav-item" data-pid="5">05 · Spatial Filtering</button>
+    <button class="nav-item" data-pid="6">06 · Image Restoration</button>
+    <button class="nav-item" data-pid="7">07 · Image Compression</button>
+    <button class="nav-item" data-pid="8">08 · Morphological Operations</button>
+    <button class="nav-item" data-pid="9">09 · Correlation Object Detection</button>
+    <button class="nav-item" data-pid="10">10 · Color Space Conversion</button>
+    <button class="nav-item" data-pid="11">11 · Edge Detection</button>
+    <hr>
+    <button class="nav-item" data-home="true">⌂ Dashboard</button>
+  </aside>
+
+  <main class="main">
+    <section class="hero" id="home">
+      <div>
+        <span class="eyebrow">COLLEGE PRACTICAL LAB</span>
+        <h1>Image Processing<br><span>Virtual Laboratory</span></h1>
+        <p>Interactive Python & OpenCV experiments for Practical 02 to Practical 11.</p>
+        <button class="primary" id="startBtn">Start Experiment →</button>
+      </div>
+      <div class="hero-art">
+        <div class="scan"></div>
+        <div class="lens">◉</div>
+        <div class="pixels">▦ ▦ ▦<br>▦ ▦ ▦<br>▦ ▦ ▦</div>
+      </div>
+    </section>
+
+    <section class="dashboard-cards">
+      <div class="stat"><b>10</b><span>Total Practicals</span></div>
+      <div class="stat"><b>02–11</b><span>Practical Range</span></div>
+      <div class="stat"><b>CV</b><span>Computer Vision</span></div>
+      <div class="stat"><b>Python</b><span>OpenCV Backend</span></div>
+    </section>
+
+    <section class="dashboard-topics" id="post-lab-topics">
+      <div class="dashboard-topic-head">
+        <div>
+          <span class="eyebrow">PRACTICAL 10 &amp; PRACTICAL 11</span>
+          <h2>Practical 10 &amp; 11 — New Topics</h2>
+          <p>Both Post Lab topics are connected to the existing laboratory. Select a topic to open its complete interactive experiment.</p>
+        </div>
+      </div>
+
+      <div class="topic-cards">
+        <button type="button" class="topic-card" data-topic-pid="10" aria-label="Open Practical 10 Color Space Conversion">
+          <span class="topic-number">10</span>
+          <span class="topic-content">
+            <strong>10 — Color Space Conversion</strong>
+            <small>RGB · HSV · YCrCb · Lab · Grayscale · Channel Analysis</small>
+            <em>Convert images between the RGB, HSV, YCrCb, and Lab colour spaces, analyzing how colour information is encoded in each.</em>
+          </span>
+          <span class="topic-arrow">Open →</span>
+        </button>
+
+        <button type="button" class="topic-card" data-topic-pid="11" aria-label="Open Practical 11 Edge Detection">
+          <span class="topic-number">11</span>
+          <span class="topic-content">
+            <strong>11 — Edge Detection</strong>
+            <small>Canny · Sobel · Prewitt · Thresholds · Aperture Size · L2 Gradient</small>
+            <em>Detect edges using Canny and compare the results with Sobel and Prewitt detectors.</em>
+          </span>
+          <span class="topic-arrow">Open →</span>
+        </button>
+      </div>
+    </section>
+
+    <section id="lab" class="lab">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow" id="pLabel">PRACTICAL 02 / 11</span>
+          <h2 id="pTitle">Image Formats & Operations</h2>
+          <p id="pShort"></p>
+        </div>
+        <div class="pager">
+          <button class="ghost" id="prevBtn">← Previous</button>
+          <button class="ghost" id="nextBtn">Next →</button>
+        </div>
+      </div>
+      <div class="progress"><div id="progressBar"></div></div>
+
+      <div class="info-grid">
+        <article class="info-card">
+          <h3>Aim</h3><p id="aim"></p>
+        </article>
+        <article class="info-card">
+          <h3>Objectives</h3><ul id="objectives"></ul>
+        </article>
+        <article class="info-card wide">
+          <details open><summary>Theory</summary><p id="theory"></p></details>
+          <details><summary>Algorithm</summary><ol id="algorithm"></ol></details>
+          <details><summary>Conclusion</summary><p id="conclusion"></p></details>
+        </article>
+      </div>
+
+      <div class="experiment">
+        <div class="control-panel">
+          <div class="panel-title">Experiment Controls</div>
+          <label>Input Image</label>
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload image by dragging and dropping or browsing">
+            <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp,.jpg,.jpeg,.png,.webp">
+            <div class="upload-icon">↑</div>
+            <b>Drag & Drop your image here</b>
+            <span class="upload-or">or</span>
+            <button type="button" class="browse-btn" id="browseBtn">Browse Image</button>
+            <small>JPG · JPEG · PNG · WEBP · Max 12 MB</small>
+          </div>
+          <div id="fileMeta" class="file-meta hidden"></div>
+
+          <div id="controls"></div>
+
+          <div class="button-row">
+            <button class="primary" id="applyBtn">Apply Operation</button>
+            <button class="ghost" id="resetBtn">Reset</button>
+          </div>
+          <div class="button-row">
+            <button class="ghost" id="codeBtn">View Python Code</button>
+            <button class="ghost" id="copyBtn">Copy Code</button>
+          </div>
+        </div>
+
+        <div class="results-panel">
+          <div class="result-head">
+            <h3>Result</h3>
+            <button class="primary small hidden" id="downloadBtn">Download Result</button>
+          </div>
+          <div class="compare">
+            <div class="image-box"><span>ORIGINAL</span><img id="originalPreview" alt="Original"></div>
+            <div class="image-box"><span>PROCESSED</span><img id="resultPreview" alt="Processed"></div>
+          </div>
+          <div class="metrics" id="metrics"></div>
+        </div>
+      </div>
+
+      <div class="viva">
+        <h3>Discussion / Viva Questions</h3>
+        <div id="viva"></div>
+      </div>
+    </section>
+
+    <section id="about" class="about">
+      <span class="eyebrow">ABOUT</span>
+      <h2>Built for practical learning</h2>
+      <p>A student-friendly platform for learning and performing image processing practical experiments using Python, Flask, OpenCV and NumPy.</p>
+      <div class="techs"><span>Python</span><span>OpenCV</span><span>NumPy</span><span>Flask</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span></div>
+      <div class="student-form">
+        <h3>Student Information</h3>
+        <input id="studentName" placeholder="Student Name">
+        <input id="rollNo" placeholder="Roll Number">
+        <input id="semester" placeholder="Semester / Year">
+        <input id="session" placeholder="Academic Session">
+        <input id="department" placeholder="Department">
+        <input id="college" placeholder="College Name">
+        <button class="ghost" id="saveStudent">Save Information</button>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<div class="modal hidden" id="codeModal">
+  <div class="modal-card">
+    <div class="modal-head"><h3>Python / OpenCV Code</h3><button id="closeModal">×</button></div>
+    <pre><code id="codeBox"></code></pre>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='js/script.js') }}?v=postlab-10-11-fixed-1"></script>
+</body>
+</html>
