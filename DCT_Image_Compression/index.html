@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>DCT Image Compression</title>
+
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+    <h1>DCT Image Compression</h1>
+
+    <p>
+        Web-Based Photo Storage using JPEG-like Compression
+    </p>
+
+</header>
+
+
+<nav>
+
+    <a href="#home">Home</a>
+
+    <a href="#compression">Compression</a>
+
+    <a href="#histogram">Histogram</a>
+
+    <a href="#filters">Filters</a>
+
+    <a href="#noise">Noise</a>
+
+    <a href="#performance">Performance</a>
+
+</nav>
+
+
+
+<!-- ============================= -->
+<!-- HOME -->
+<!-- ============================= -->
+
+<section id="home">
+
+
+    <h2>Image Compression using DCT</h2>
+
+
+    <p>
+
+        This project compresses images using the Discrete Cosine Transform
+        (DCT). It follows the basic idea of JPEG-like image compression
+        to reduce image storage size while maintaining good image quality.
+
+    </p>
+
+
+    <h3 class="upload-title">Upload Images</h3>
+
+<div class="upload-box" id="uploadBox">
+
+    <div class="upload-icon">
+        📁
+    </div>
+
+    <h3>Upload your images</h3>
+
+    <p>
+        Select up to 5 images for DCT compression
+    </p>
+
+    <label for="imageInput" class="browse-btn">
+        Browse Images
+    </label>
+
+    <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        multiple
+        hidden
+    >
+
+    <p class="upload-info">
+        PNG, JPG, JPEG • Maximum 5 images
+    </p>
+
+</div>
+
+
+
+    <div class="image-container">
+
+
+        <div>
+
+            <h3>Original Image</h3>
+
+            <img id="originalImage">
+
+        </div>
+
+
+        <div>
+
+            <h3>Compressed Image</h3>
+
+            <img id="compressedImage">
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- COMPRESSION -->
+<!-- ============================= -->
+
+<section id="compression">
+
+
+    <h2>DCT Compression Process</h2>
+
+
+    <div class="process">
+
+
+        <div>Input Image</div>
+
+        <span>→</span>
+
+
+        <div>8 × 8 Blocks</div>
+
+        <span>→</span>
+
+
+        <div>DCT</div>
+
+        <span>→</span>
+
+
+        <div>Quantization</div>
+
+        <span>→</span>
+
+
+        <div>IDCT</div>
+
+        <span>→</span>
+
+
+        <div>Output Image</div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- HISTOGRAM -->
+<!-- ============================= -->
+
+<section id="histogram">
+
+
+    <h2>Histogram</h2>
+
+
+    <div class="histogram-box">
+
+
+        <div>
+
+            <h3>Original Images Histogram</h3>
+
+            <canvas
+                id="originalHistogram"
+                width="600"
+                height="300"
+            ></canvas>
+
+        </div>
+
+
+
+        <div>
+
+            <h3>Compressed Images Histogram</h3>
+
+            <canvas
+                id="compressedHistogram"
+                width="600"
+                height="300"
+            ></canvas>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- FILTERS -->
+<!-- ============================= -->
+
+<section id="filters">
+
+
+    <h2>Image Filters</h2>
+
+
+    <p>
+        Kernel Size: 3 × 3
+    </p>
+
+
+    <div class="filter-buttons">
+
+
+        <button id="averageFilter">
+            Average Filter
+        </button>
+
+
+        <button id="gaussianFilter">
+            Gaussian Filter
+        </button>
+
+
+        <button id="medianFilter">
+            Median Filter
+        </button>
+
+
+        <button id="bilateralFilter">
+            Bilateral Filter
+        </button>
+
+
+    </div>
+
+
+
+    <div
+        id="filterResult"
+        style="
+            margin-top:25px;
+            text-align:center;
+        "
+    >
+
+
+        <h3>Filtered Images</h3>
+
+
+        <canvas
+            id="filteredCanvas"
+        ></canvas>
+
+
+        <p id="filterName">
+
+            Select a filter to see the result.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- NOISE PROCESSING -->
+<!-- ============================= -->
+
+<section id="noise">
+
+
+    <h2>Noise Processing</h2>
+
+
+    <p>
+
+        Gaussian noise is added to the image to study the effect
+        of noise on image compression.
+
+    </p>
+
+
+
+    <div class="noise-buttons">
+
+
+        <button id="gaussianNoiseBtn">
+
+            Add Gaussian Noise
+
+        </button>
+
+
+        <button id="saltPepperNoiseBtn">
+
+            Add Salt & Pepper Noise
+
+        </button>
+
+
+    </div>
+
+
+
+    <div
+        style="
+            text-align:center;
+            margin-top:25px;
+        "
+    >
+
+
+        <h3>Noisy Images</h3>
+
+
+        <canvas
+            id="noiseCanvas"
+        ></canvas>
+
+
+        <p id="noiseName">
+
+            Select a noise type to see the output.
+
+        </p>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- PERFORMANCE -->
+<!-- ============================= -->
+
+<section id="performance">
+
+
+    <h2>Performance Comparison</h2>
+
+
+    <!--
+        The actual 5-image Performance Comparison
+        table is automatically created by upload.js.
+    -->
+
+
+    <div id="performanceContainer"></div>
+
+
+
+    <!--
+        Hidden elements required by upload.js.
+        These are NOT displayed.
+    -->
+
+
+    <div style="display:none;">
+
+
+        <span id="originalSize">-</span>
+
+        <span id="compressedSize">-</span>
+
+        <span id="compressionRatio">-</span>
+
+        <span id="sizeReduction">-</span>
+
+        <span id="mse">-</span>
+
+        <span id="psnr">-</span>
+
+        <span id="ssim">-</span>
+
+        <span id="processingTime">-</span>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- INPUT AND OUTPUT -->
+<!-- ============================= -->
+
+<section>
+
+
+    <h2>Input and Output</h2>
+
+
+    <div class="input-output">
+
+
+        <div>
+
+
+            <h3>Input</h3>
+
+
+            <p>
+
+                Original photograph uploaded by the user.
+
+            </p>
+
+
+        </div>
+
+
+
+        <div>
+
+
+            <h3>Output</h3>
+
+
+            <p>
+
+                JPEG-like compressed image with reduced storage size
+                and acceptable image quality.
+
+            </p>
+
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- ============================= -->
+<!-- FOOTER -->
+<!-- ============================= -->
+
+<footer>
+
+
+    <p>
+
+        DCT Image Compression Project | Image Processing
+
+    </p>
+
+
+</footer>
+
+
+
+<!-- ============================= -->
+<!-- JAVASCRIPT FILES -->
+<!-- ============================= -->
+
+<script src="js/compression.js"></script>
+
+<script src="js/filters.js"></script>
+
+<script src="js/noise.js"></script>
+
+<script src="js/histogram.js"></script>
+
+<script src="js/metrics.js"></script>
+
+<script src="js/upload.js"></script>
+
+
+</body>
+
+</html>

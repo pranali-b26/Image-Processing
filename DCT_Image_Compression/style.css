@@ -1,0 +1,935 @@
+/* =========================================
+   DCT IMAGE COMPRESSION - MODERN UI
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f7fb;
+    color: #1f2937;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+header {
+    background:
+        linear-gradient(
+            135deg,
+            #163f68,
+            #245b87,
+            #2f6f9f
+        );
+
+    color: white;
+
+    text-align: center;
+
+    padding: 55px 20px;
+
+    box-shadow:
+        0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+
+header h1 {
+    font-size: 42px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+}
+
+
+header p {
+    font-size: 18px;
+    opacity: 0.92;
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background: #17212b;
+
+    padding: 16px 10px;
+
+    text-align: center;
+
+    box-shadow:
+        0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+
+nav a {
+    color: white;
+
+    text-decoration: none;
+
+    margin: 0 14px;
+
+    padding: 9px 5px;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    transition:
+        color 0.25s ease,
+        border-bottom 0.25s ease;
+}
+
+
+nav a:hover {
+    color: #61b4ff;
+
+    border-bottom:
+        2px solid #61b4ff;
+}
+
+
+/* =========================================
+   MAIN SECTIONS
+   ========================================= */
+
+section {
+    background: white;
+
+    margin: 28px auto;
+
+    padding: 38px;
+
+    width: 92%;
+    max-width: 1500px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 5px 25px rgba(31, 78, 121, 0.08);
+
+    border:
+        1px solid #e8edf3;
+}
+
+
+section h2 {
+    color: #1f4e79;
+
+    font-size: 30px;
+
+    margin-bottom: 20px;
+
+    font-weight: 700;
+}
+
+
+section h3 {
+    color: #202b36;
+
+    margin-bottom: 10px;
+}
+
+
+/* =========================================
+   HOME / UPLOAD
+   ========================================= */
+
+#home p {
+    font-size: 16px;
+    color: #4b5563;
+}
+
+
+#home > h3 {
+    margin-top: 28px;
+
+    font-size: 20px;
+}
+
+
+/* File input */
+
+input[type="file"] {
+    width: 100%;
+    max-width: 600px;
+
+    margin: 15px 0;
+
+    padding: 14px;
+
+    border:
+        2px dashed #7ea8ca;
+
+    border-radius: 12px;
+
+    background: #f8fbfe;
+
+    color: #374151;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+
+input[type="file"]:hover {
+    border-color: #1f4e79;
+
+    background: #f1f8ff;
+}
+
+
+/* =========================================
+   ORIGINAL / COMPRESSED PREVIEW
+   ========================================= */
+
+.image-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(280px, 1fr));
+
+    gap: 30px;
+
+    margin-top: 30px;
+}
+
+
+.image-container > div {
+    background: #f8fafc;
+
+    border:
+        1px solid #e1e8ef;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.05);
+}
+
+
+.image-container h3 {
+    color: #1f4e79;
+
+    margin-bottom: 15px;
+}
+
+
+.image-container img {
+    width: 100%;
+    max-width: 500px;
+
+    height: 300px;
+
+    object-fit: contain;
+
+    background: #eef3f7;
+
+    border:
+        1px solid #d7e0e8;
+
+    border-radius: 12px;
+
+    padding: 8px;
+}
+
+
+/* =========================================
+   COMPRESSION PROCESS
+   ========================================= */
+
+.process {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 25px;
+}
+
+
+.process div {
+    background:
+        linear-gradient(
+            135deg,
+            #eaf3fb,
+            #dcecf8
+        );
+
+    color: #17476f;
+
+    padding: 16px 18px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    border:
+        1px solid #c6dcec;
+
+    box-shadow:
+        0 4px 12px rgba(31, 78, 121, 0.08);
+
+    transition: 0.25s ease;
+}
+
+
+.process div:hover {
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 8px 18px rgba(31, 78, 121, 0.15);
+}
+
+
+.process span {
+    font-size: 24px;
+
+    color: #1f4e79;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   HISTOGRAM
+   ========================================= */
+
+.histogram-box {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(300px, 1fr));
+
+    gap: 30px;
+
+    margin-top: 25px;
+}
+
+
+.histogram-box > div {
+    background: #f9fbfd;
+
+    border:
+        1px solid #e1e8ef;
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+
+.histogram-box h3 {
+    text-align: center;
+
+    color: #1f4e79;
+
+    margin-bottom: 18px;
+}
+
+
+canvas {
+    display: block;
+
+    max-width: 100%;
+
+    background: #ffffff;
+
+    border:
+        1px solid #d8e0e8;
+
+    border-radius: 10px;
+}
+
+
+/* Histogram canvases */
+
+#originalHistogram,
+#compressedHistogram {
+    width: 100%;
+    height: 280px;
+}
+
+
+/* =========================================
+   FILTERS
+   ========================================= */
+
+.filter-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin:
+        20px 0;
+}
+
+
+button {
+    padding: 12px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1f4e79,
+            #286a9c
+        );
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 5px 12px rgba(31, 78, 121, 0.18);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+
+button:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 8px 18px rgba(31, 78, 121, 0.25);
+
+    background:
+        linear-gradient(
+            135deg,
+            #173b5d,
+            #215c88
+        );
+}
+
+
+button:active {
+    transform:
+        translateY(0);
+}
+
+
+/* Filter result */
+
+#filterResult {
+    background: #f8fafc;
+
+    border:
+        1px solid #e1e8ef;
+
+    border-radius: 16px;
+
+    padding: 25px;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+
+#filteredCanvas {
+    max-width: 100%;
+
+    width: 700px;
+    height: auto;
+
+    margin: 15px auto;
+
+    background: white;
+}
+
+
+/* Multiple filtered images */
+
+#batchFilterResults {
+    width: 100%;
+}
+
+
+#batchFilterResults > div {
+    border:
+        1px solid #dfe7ee !important;
+
+    border-radius: 16px !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.07) !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+#batchFilterResults > div:hover {
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* =========================================
+   NOISE PROCESSING
+   ========================================= */
+
+.noise-buttons {
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+
+#batchNoiseResults {
+    width: 100%;
+}
+
+
+#batchNoiseResults > div {
+    border:
+        1px solid #dfe7ee !important;
+
+    border-radius: 16px !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.07) !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+#batchNoiseResults > div:hover {
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+
+/* =========================================
+   PERFORMANCE
+   ========================================= */
+
+#performance {
+    overflow: hidden;
+}
+
+
+#performance h2 {
+    margin-bottom: 15px;
+}
+
+
+#batchPerformance {
+    width: 100% !important;
+
+    margin-top: 15px !important;
+
+    overflow: hidden;
+}
+
+
+#batchPerformance > div {
+    overflow-x: auto;
+
+    border-radius: 14px;
+}
+
+
+#batchPerformance table {
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    overflow: hidden;
+
+    background: white;
+
+    border:
+        1px solid #dbe4ec;
+
+    border-radius: 14px;
+}
+
+
+#batchPerformance th {
+    background:
+        linear-gradient(
+            135deg,
+            #1f4e79,
+            #286a9c
+        ) !important;
+
+    color: white;
+
+    padding: 15px !important;
+
+    font-size: 15px;
+
+    border: none !important;
+}
+
+
+#batchPerformance td {
+    padding: 13px !important;
+
+    border:
+        1px solid #e6ebf0 !important;
+
+    color: #303b46;
+
+    background: white;
+
+    font-size: 14px;
+}
+
+
+#batchPerformance tr:hover td {
+    background: #f5f9fc;
+}
+
+
+#batchPerformance th:first-child {
+    border-top-left-radius: 12px;
+}
+
+
+#batchPerformance th:last-child {
+    border-top-right-radius: 12px;
+}
+
+
+/* =========================================
+   BATCH IMAGE RESULT CARDS
+   ========================================= */
+
+#batchResults {
+    width: 100%;
+}
+
+
+#batchResults > div {
+    border:
+        1px solid #dfe7ee !important;
+
+    border-radius: 16px !important;
+
+    background: #ffffff !important;
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.07) !important;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+#batchResults > div:hover {
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 12px 28px rgba(0, 0, 0, 0.11) !important;
+}
+
+
+#batchResults img {
+    background: #f2f5f8;
+
+    border:
+        1px solid #dfe6ed;
+
+    padding: 5px;
+
+    border-radius: 10px;
+}
+
+
+/* =========================================
+   INPUT / OUTPUT
+   ========================================= */
+
+.input-output {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(280px, 1fr));
+
+    gap: 25px;
+
+    margin-top: 20px;
+}
+
+
+.input-output div {
+    padding: 25px;
+
+    border-radius: 15px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f4f8fb,
+            #edf4f9
+        );
+
+    border:
+        1px solid #dce6ee;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+
+.input-output h3 {
+    color: #1f4e79;
+
+    margin-bottom: 10px;
+}
+
+
+.input-output p {
+    color: #4b5563;
+}
+
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+    margin-top: 40px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    background: #17212b;
+
+    color: white;
+
+    font-size: 15px;
+}
+
+
+/* =========================================
+   RESPONSIVE DESIGN
+   ========================================= */
+
+@media (max-width: 900px) {
+
+    header h1 {
+        font-size: 34px;
+    }
+
+
+    section {
+        width: 94%;
+
+        padding: 25px;
+    }
+
+
+    .image-container,
+    .histogram-box,
+    .input-output {
+        grid-template-columns: 1fr;
+    }
+
+
+    nav a {
+        margin: 0 8px;
+
+        font-size: 14px;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 40px 15px;
+    }
+
+
+    header h1 {
+        font-size: 28px;
+    }
+
+
+    header p {
+        font-size: 15px;
+    }
+
+
+    nav {
+        padding: 12px 5px;
+    }
+
+
+    nav a {
+        display: inline-block;
+
+        margin: 4px 7px;
+    }
+
+
+    section {
+        width: 95%;
+
+        margin: 18px auto;
+
+        padding: 20px;
+
+        border-radius: 14px;
+    }
+
+
+    section h2 {
+        font-size: 25px;
+    }
+
+
+    .process {
+        flex-direction: column;
+    }
+
+
+    .process span {
+        transform: rotate(90deg);
+    }
+
+
+    button {
+        width: 100%;
+    }
+
+
+    #originalHistogram,
+    #compressedHistogram {
+        height: 220px;
+    }
+
+}
+#batchResults {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 5px 5px 20px 5px;
+    width: 100%;
+}
+
+#batchResults > div {
+    flex: 0 0 300px !important;
+    width: 300px !important;
+    min-width: 300px !important;
+    max-width: 300px !important;
+}
+/* =========================================
+   UPLOAD BUTTON FIX
+   ========================================= */
+
+.browse-btn {
+    display: inline-block !important;
+
+    padding: 12px 26px !important;
+
+    background: linear-gradient(
+        135deg,
+        #1f4e79,
+        #286a9c
+    ) !important;
+
+    color: #ffffff !important;
+
+    border-radius: 10px !important;
+
+    font-size: 16px !important;
+
+    font-weight: 600 !important;
+
+    text-decoration: none !important;
+
+    cursor: pointer !important;
+
+    border: none !important;
+
+    box-shadow:
+        0 5px 14px rgba(31, 78, 121, 0.25) !important;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease !important;
+}
+
+
+.browse-btn:hover {
+    transform: translateY(-2px) !important;
+
+    box-shadow:
+        0 8px 20px rgba(31, 78, 121, 0.30) !important;
+}
